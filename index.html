@@ -1069,7 +1069,8 @@ tailwind.config = {
         </div>
       </div>
       <div data-aos="fade-left">
-        <form id="contact-form" class="bg-gray-light rounded-2xl p-6 md:p-8 space-y-5">
+        <form id="contact-form" action="https://formsubmit.co/aaktasmert@gmail.com" method="POST" class="bg-gray-light rounded-2xl p-6 md:p-8 space-y-5">
+          <input type="hidden" name="_next" value="https://aks-romork-app.vercel.app">
           <input type="hidden" name="_subject" value="AKS Romork Web Sitesinden Yeni Mesajınız Var!">
           <input type="hidden" name="_captcha" value="false">
           <div class="grid sm:grid-cols-2 gap-4">
@@ -1463,45 +1464,12 @@ tailwind.config = {
 
   // Contact form
   document.getElementById('contact-form').addEventListener('submit', (e) => {
-    e.preventDefault();
+    // We allow standard HTML submission to complete activation!
     const btn = e.target.querySelector('button[type="submit"]');
-    const formData = new FormData(e.target);
     
-    // UI Loading update
-    btn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">progress_activity</span> Gönderiliyor...';
-
-    // FormSubmit AJAX Call
-    fetch('https://formsubmit.co/ajax/aaktasmert@gmail.com', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json'
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      // Success
-      btn.innerHTML = '<span class="material-symbols-outlined text-base fill-icon">check_circle</span> Mesaj İletildi!';
-      btn.classList.remove('btn-brand');
-      btn.classList.add('bg-green-500', 'text-white');
-      setTimeout(() => {
-        btn.innerHTML = 'Gönder <span class="material-symbols-outlined text-base">send</span>';
-        btn.classList.add('btn-brand');
-        btn.classList.remove('bg-green-500', 'text-white');
-        e.target.reset();
-      }, 5000);
-    })
-    .catch(error => {
-      // Error
-      btn.innerHTML = '<span class="material-symbols-outlined text-base">error</span> Hata Oluştu';
-      btn.classList.remove('btn-brand');
-      btn.classList.add('bg-red-600', 'text-white');
-      setTimeout(() => {
-        btn.innerHTML = 'Gönder <span class="material-symbols-outlined text-base">send</span>';
-        btn.classList.add('btn-brand');
-        btn.classList.remove('bg-red-600', 'text-white');
-      }, 5000);
-    });
+    // UI Loading update (will show briefly before redirecting)
+    btn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">progress_activity</span> Yönlendiriliyor...';
+    btn.classList.add('opacity-70');
   });
 
   // Back to top
